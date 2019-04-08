@@ -65,8 +65,6 @@ namespace AuthServer
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
-            //addcertto root and uncomment this and .AddSigningCredentials in env check below
-            //var cert = new X509Certificate2(Path.Combine(Environment.ContentRootPath, "company.code.pfx"), "pASSwOrd");
 
             services.AddDbContext<ApplicationDbContext>(builder =>
                 builder.UseSqlServer(connectionString, sqlOptions => sqlOptions.MigrationsAssembly(migrationsAssembly)));
@@ -120,7 +118,6 @@ namespace AuthServer
             services.AddDbContext<IdentityDbContext>(builder =>
                 builder.UseSqlServer(connectionString, sqlOptions => sqlOptions.MigrationsAssembly(migrationsAssembly)));
 
-
             services.Configure<EmailConfig>(Configuration.GetSection("EmailConfig"));
             services.AddSingleton(Configuration);
 
@@ -131,8 +128,11 @@ namespace AuthServer
             else
             {
                 //when cert is added comment this out and uncomment following line
-                throw new Exception("need to configure key material");
-                //identityServer.AddSigningCredential(cert);
+                //throw new Exception("need to configure key material");
+                
+                //addcertto root and uncomment this and .AddSigningCredentials in env check below
+                var cert = new X509Certificate2(Path.Combine(Environment.ContentRootPath, Configuration.GetValue<string>("IdentityCertificateConfig:name")), Configuration.GetValue<string>("IdentityCertificateConfig:password"));
+                identityServer.AddSigningCredential(cert);
             }
             services.AddSwaggerGen(c =>
             {

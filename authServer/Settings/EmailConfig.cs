@@ -14,5 +14,11 @@
         public string VerifyEmailUrl { get; set; }
         public string PasswordResetUrl { get; set; }
     }
+
+    public class IdentityCertificateConfig
+    {
+        public string name { get; set; }
+        public string password { get; set; }
+    }
 }
 

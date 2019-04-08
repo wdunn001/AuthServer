@@ -9,6 +9,12 @@ to initialize the database go to the startup.cs uncomment the //InitializeDataba
 
 be sure to comment out the initialize function after the first run otherwise you'll wipe out the database in subsequent runs.
 
+## setup Certificate
+
+When running in development you don't need a certificate but in production you do be sure to add a certificate to the root of however you deploy and add its name and password to the appsettings
+
+If you add it to the project folder ensure that the certificates "Copy to Output directory" is set to true. 
+
 ## setup email
 
 The email settings are in the appsettings the email templates exist in the EmailTemplates folder in root. the various links are to views that might be used in an email.
